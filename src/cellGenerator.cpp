@@ -27,12 +27,18 @@ cellGenerator::cellGenerator(float const &side, float const &between, int const 
 		}
 	}
 
-	std::cout << "Test" << std::endl;
 	setBegin(getCell(5, 5));
-	std::cout << "Goodbye" << std::endl;
 	setAsGoal(getCell(nbColumn - 5, nbRow - 5));
 	theCursor = new Cursor(cellGenerator::getCell(1, 1));
 	cursorPosition = sf::Vector2f(1, 1);
+}
+
+std::vector<std::vector<Cell>> cellGenerator::copyList() {
+	return allCells;
+}
+
+void cellGenerator::setAllCells(std::vector<std::vector<Cell>> &newCells) {
+	allCells = newCells;
 }
 
 void cellGenerator::draw() {
@@ -57,14 +63,16 @@ void cellGenerator::setBegin(Cell *theCell) {
 	if (beginCell != nullptr) {
 		beginCell->setState(Cell::statesCell::undiscovered);
 	}
-
-	std::cout << "Adress of theCell : " << theCell << std::endl;
 	theCell->setState(Cell::statesCell::begin);
 	beginCell = theCell;
 }
 
 void cellGenerator::setAsGoal(Cell * theCell) {
 	theCell->setState(Cell::statesCell::end);
+}
+
+sf::RenderWindow *cellGenerator::getRender() {
+	return rend;
 }
 
 std::vector<Cell *> cellGenerator::getCellsAround(Cell * workingCell) {

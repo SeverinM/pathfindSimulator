@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <SFML\Graphics.hpp>
 
@@ -49,14 +50,16 @@ private:
 	std::vector<std::vector<Cell>> allCells;
 	float sideLenght;
 	float LenghtBetweenCell;
-	sf::Vector2f startPos;
-	int nbRow;
-	int nbColumn;
 	Cell *beginCell = nullptr;
 	Cursor * theCursor = nullptr;
 	sf::Vector2f cursorPosition;
 
 public:
+	int nbRow;
+	int nbColumn;
+	sf::Vector2f startPos;
+	void setAllCells(std::vector<std::vector<Cell>> &newCells);
+	std::vector<std::vector<Cell>> copyList();
 	Cursor * getCursor();
 	cellGenerator(float const &side, float const &between, int const &row, int const &column, sf::Vector2f const &startPos, sf::RenderWindow *win, int proba);
 	void draw();
@@ -68,6 +71,7 @@ public:
 	Cell * getGoal();
 	void moveCursor(sf::Vector2f &&dir);
 	std::vector<Cell *> getAllCells();
+	sf::RenderWindow *getRender();
 };
 
 

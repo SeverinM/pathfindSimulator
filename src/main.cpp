@@ -3,13 +3,16 @@
 #include <chrono>
 #include <thread>
 #include <iostream>
+#include "Conway.h"
 
 int main(int argc, char** argv)
 {
 	sf::RenderWindow window(sf::VideoMode(1600, 1000), "Pathfind");
-	cellGenerator test(8, 1, 100, 100, sf::Vector2f(20, 20), &window, 0);
+	cellGenerator test(8, 1, 100, 100, sf::Vector2f(10, 20), &window, 0);
 	BreadthAlgo * algo;
 	algo = new Dijkstra(&test);
+	Conway newConway(10, 50, test.copyList());
+	newConway.apply(&test);
 	algo->Init();
 
 	sf::Font font;
@@ -19,13 +22,13 @@ int main(int argc, char** argv)
 	}
 
 	text.setFont(font);
-	text.setString("C : Breadth\nV : Dijkstra\nB : A*\nReturn : Pause / Resume");
 	text.setPosition(sf::Vector2f(window.getSize().x - (10 * text.getCharacterSize()),50));
 	text.setCharacterSize(25);
 	algo->setStop(true);
 
 	while (window.isOpen())
 	{
+		text.setString("C : Breadth\nV : Dijkstra\nB : A*\nReturn : Pause / Resume\nDiscovered cell : " + std::to_string(algo->getCountDiscovered()) + "\nPath Lenght : " + std::to_string(algo->getCountPath()));
 		sf::Event event;
 		while (window.pollEvent(event))
 		{

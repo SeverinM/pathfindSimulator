@@ -8,6 +8,16 @@ BreadthAlgo::BreadthAlgo(cellGenerator * theGen) {
 	cellHandler = theGen;
 	stop = true;
 	endcell = nullptr;
+	discoveredCount = 0;
+	pathLenght = 0;
+}
+
+int BreadthAlgo::getCountDiscovered() {
+	return discoveredCount;
+}
+
+int BreadthAlgo::getCountPath() {
+	return pathLenght;
 }
 
 void BreadthAlgo::addFrontier(Cell * theCell) {
@@ -16,6 +26,7 @@ void BreadthAlgo::addFrontier(Cell * theCell) {
 }
 
 void BreadthAlgo::discover() { //Remove the buttom most element , assume this cell is discovered
+	discoveredCount += 1;
 	Cell * theCell = frontierQueue.front();
 	theCell->setState(Cell::statesCell::discovered);
 	frontierQueue.pop();
@@ -73,6 +84,7 @@ void BreadthAlgo::setStop(bool value) {
 void BreadthAlgo::showPath() {
 	Cell * currentCell = endcell;
 	while (currentCell->getState() != Cell::statesCell::begin) {
+		pathLenght += 1;
 		if (currentCell->getState() != Cell::statesCell::end)
 			currentCell->setState(Cell::statesCell::path);
 		currentCell = currentCell->getCameFrom();
@@ -80,6 +92,8 @@ void BreadthAlgo::showPath() {
 }
 
 void BreadthAlgo::reset() {
+	discoveredCount = 0;
+	pathLenght = 0;
 	frontierQueue = std::queue<Cell*>();
 	frontierQueue.push(cellHandler->getBegin());
 	next();

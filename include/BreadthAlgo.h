@@ -1,8 +1,11 @@
+#pragma once
 #include <queue>
 #include "cellGenerator.h"
 
 class BreadthAlgo {
 	protected :
+		int discoveredCount;
+		int pathLenght;
 		std::queue<Cell *> frontierQueue;
 		cellGenerator *cellHandler;
 		bool stop;
@@ -17,4 +20,6 @@ class BreadthAlgo {
 		virtual void showPath();
 		virtual void setStop(bool value);
 		virtual void reset();
+		int getCountDiscovered();
+		int getCountPath();
 };

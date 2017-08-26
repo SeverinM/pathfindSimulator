@@ -55,6 +55,7 @@ void Dijkstra::addFrontier(Cell * theCell) {
 }
 
 void Dijkstra::discover() {
+	discoveredCount += 1;
 	Cell * theCell = allCells[0];
 	theCell->setState(Cell::statesCell::discovered);
 	allCells.erase(allCells.begin());
